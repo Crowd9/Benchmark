@@ -1,2 +1,2 @@
 To run:
-export SZ_KEY=MYKEY; cat ubuntu | sh
+export SZ_KEY=MYKEY; curl https://raw.github.com/Crowd9/Benchmark/master/ubuntu | sh
