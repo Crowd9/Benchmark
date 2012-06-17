@@ -4,7 +4,6 @@ PID=`cat .pid`
 UNIX_BENCH_VERSION='5.1.3'
 UNIX_BENCH_DIR=UnixBench-$UNIX_BENCH_VERSION
 UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
-#UPLOAD_ENDPOINT='http://dev.promozor.com:3000/uploads.text'
 
 if [ -e "`pwd`/.pid" ] && ps -p $PID >&- ; then
   echo "ServerBear job is already running (PID: $PID)"
@@ -36,8 +35,8 @@ free >> sz-output.log
 
 ./Run >> sz-output.log 2> sz-error.log
 
-RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sz-output.log" -F "upload[key]=$SZ_KEY" $UPLOAD_ENDPOINT\`
-RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-error" -F "upload[data]=<sz-error.log" -F "upload[key]=$SZ_KEY" $UPLOAD_ENDPOINT\`
+RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sz-output.log" -F "upload[key]=$SZK" $UPLOAD_ENDPOINT\`
+RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-error" -F "upload[data]=<sz-error.log" -F "upload[key]=$SZK" $UPLOAD_ENDPOINT\`
 
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
