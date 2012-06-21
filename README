@@ -1,3 +1,3 @@
 To run:
-export SZK="john@example.com FooBarHosts.com MonsterBox";curl https://bit.ly/SerBear|sh
+export SZK="john@example.com FooBarHosts.com MonsterBox";curl https://raw.github.com/Crowd9/Benchmark/master/script.sh|sh
 
