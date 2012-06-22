@@ -17,15 +17,7 @@ To improve consistency, we recommend that you stop any services you may be runni
 WARNING: You run this script entirely at your own risk.
 ServerBear accepts no responsibility for any damage this script may cause.
 
-Please review the code at https://github.com/Crowd9/Benchmark if you have any concerns
-
-If you accept these conditions: please type \"yes\" to continue"
-read ACCEPTED
-if [ "$ACCEPTED" != 'yes' ]; then
-  echo "You must type 'yes' to accept the conditons to execute this script.  Exiting..."
-  exit 1
-fi
-
+Please review the code at https://github.com/Crowd9/Benchmark if you have any concerns"
 
 echo "Checking for required dependencies"
 
