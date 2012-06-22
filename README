@@ -1,3 +1,21 @@
+################################################################################
+#               ServerBear (http://serverbear.com) benchmarker                 #
+################################################################################
+
+This script will:
+  * Download and install packages to run UnixBench
+  * Download and run UnixBench
+  * Upload to ServerBear the UnixBench output and information about this computer
+
+This script has been tested on Ubuntu, Debian, and CentOs.  Running it on other environments not work correctly.
+
+To improve consistency, we recommend that you stop any services you may be running (e.g. web server, database, etc) to get the environment as close as possible to the original configuration.
+
+WARNING: You run this script entirely at your own risk.
+ServerBear accepts no responsibility for any damage this script may cause.
+
+Please review the code at https://github.com/Crowd9/Benchmark if you have any concerns
+
 To run:
 export SBK="john@example.com|FooBarHosts.com|MonsterBox|\$20/mth";curl https://raw.github.com/Crowd9/Benchmark/master/script.sh|sh
 
