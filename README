@@ -7,7 +7,7 @@ This script will:
   * Download and run UnixBench
   * Upload to ServerBear the UnixBench output and information about this computer
 
-This script has been tested on Ubuntu, Debian, and CentOs.  Running it on other environments not work correctly.
+This script has been tested on Ubuntu, Debian, and CentOs.  Running it on other environments may not work correctly.
 
 To improve consistency, we recommend that you stop any services you may be running (e.g. web server, database, etc) to get the environment as close as possible to the original configuration.
 
