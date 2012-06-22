@@ -106,7 +106,7 @@ EOF
 
 chmod u+x run-upload.sh
 
-nohup ./run-upload.sh > sb-script.log 2>&1 >/dev/null
+nohup ./run-upload.sh > sb-script.log & 2>&1 >/dev/null
 
 echo $! > .sb-pid
 
