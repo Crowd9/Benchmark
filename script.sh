@@ -45,7 +45,7 @@ else
   requires 'dpkg -s build-essential' 'build-essential'
 fi
 
-requires 'perl -MTime::HiRes -e 1' 'perl-Time-HiRes'
+requires 'perl -MTime::HiRes -e 1' 'perl perl-Time-HiRes'
 
 requires_command 'gcc'
 requires_command 'make'
