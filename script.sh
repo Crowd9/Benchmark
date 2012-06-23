@@ -86,7 +86,7 @@ echo "You can log out/Ctrl-C any time while this is happening (it's running thro
 
 cd $UNIX_BENCH_DIR
 echo "Distro: 
-\`/etc/issue\` 
+\`cat /etc/issue\` 
 Disk space: 
 \`df\` --total 
 Free: 
