@@ -37,15 +37,16 @@ if [ `which apt-get >/dev/null 2>&1; echo $?` -ne 0 ]; then
 
   requires 'yum list installed kernel-devel' 'kernel-devel'
   requires 'yum list installed gcc-c++' 'gcc-c++'
+  requires 'perl -MTime::HiRes -e 1' 'perl-Time-HiRes'
 else
   PACKAGE_MANAGER='apt-get'
   MANAGER_OPTS='--fix-missing'
   UPDATE='apt-get update'
 
   requires 'dpkg -s build-essential' 'build-essential'
+  requires 'perl -MTime::HiRes -e 1' 'perl'
 fi
 
-requires 'perl -MTime::HiRes -e 1' 'perl perl-Time-HiRes'
 
 requires_command 'gcc'
 requires_command 'make'
