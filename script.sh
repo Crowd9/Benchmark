@@ -85,12 +85,12 @@ echo "This can take several hours.  ServerBear will email you when it's done."
 echo "You can log out/Ctrl-C any time while this is happening (it's running through nohup)."
 
 cd $UNIX_BENCH_DIR
-echo "distro: " > sb-output.log
-cat /etc/issue >> sb-output.log
-echo "disk space: " >> sb-output.log
-df --total >> sb-output.log
-echo "free: " >> sb-output.log
-free >> sb-output.log
+echo "Distro: 
+\`/etc/issue\` 
+Disk space: 
+\`df\` --total 
+Free: 
+\`free\`" > sb-output.log
 
 ./Run >> sb-output.log 2> sb-error.log
 
@@ -106,7 +106,9 @@ EOF
 
 chmod u+x run-upload.sh
 
-nohup ./run-upload.sh > sb-script.log & 2>&1 >/dev/null
+>sb-script.log
+
+nohup ./run-upload.sh >> sb-script.log & 2>&1 >/dev/null
 
 echo $! > .sb-pid
 
