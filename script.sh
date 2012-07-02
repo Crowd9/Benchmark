@@ -81,11 +81,13 @@ if ! [ -e "`pwd`/$UNIX_BENCH_DIR" ]; then
   mv UnixBench $UNIX_BENCH_DIR
 fi
 
-echo "Running UnixBench as a background task."
+echo "Running Benchmark as a background task."
 echo "This can take several hours.  ServerBear will email you when it's done."
 echo "You can log out/Ctrl-C any time while this is happening (it's running through nohup)."
 
 cd $UNIX_BENCH_DIR
+
+echo "Checking server stats..."
 echo "Distro: 
 \`cat /etc/issue\` 
 Disk space: 
@@ -93,6 +95,15 @@ Disk space:
 Free: 
 \`free\`" > sb-output.log
 
+echo "Running I/O test..."
+echo "I/O:
+\`dd if=/dev/zero of=test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
+
+echo "Running bandwidth test..."
+echo "100MB download: 
+\`/usr/bin/time -f 'Real: %E' curl -s -o /dev/null http://cachefly.cachefly.net/100mb.test 2>&1\`" >> sb-output.log
+
+echo "Running UnixBench..."
 ./Run >> sb-output.log 2> sb-error.log
 
 RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$SBK" $UPLOAD_ENDPOINT\`
@@ -100,7 +111,7 @@ RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-error" -F "upload[data]=<s
 
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
-echo "Done"
+echo "Done (Ctrl+C to exit)"
 
 exit 0
 EOF
