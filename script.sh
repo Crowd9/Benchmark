@@ -98,6 +98,7 @@ Free:
 echo "Running I/O test..."
 echo "I/O:
 \`dd if=/dev/zero of=test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
+rm test
 
 echo "Running bandwidth test..."
 echo "100MB download: 
@@ -111,7 +112,8 @@ RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-error" -F "upload[data]=<s
 
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
-echo "Done (Ctrl+C to exit)"
+echo "Done"
+kill `ps -p $$ -o ppid=` 2>&1 > /dev/null
 
 exit 0
 EOF
