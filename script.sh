@@ -102,7 +102,7 @@ rm test
 
 echo "Running bandwidth test..."
 echo "100MB download: 
-\`/usr/bin/time -f 'Real: %E' curl -s -o /dev/null http://cachefly.cachefly.net/100mb.test 2>&1\`" >> sb-output.log
+\`/usr/bin/time -f 'Real: %e' curl -s -o /dev/null http://cachefly.cachefly.net/100mb.test 2>&1\`" >> sb-output.log
 
 echo "Running UnixBench..."
 ./Run >> sb-output.log 2> sb-error.log
