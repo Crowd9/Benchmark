@@ -51,7 +51,6 @@ requires_command 'time'
 requires_command 'gcc'
 requires_command 'make'
 
-#!/bin/bash
 if [ "`whoami`" != "root" ]; then
   SUDO='sudo'
 fi
