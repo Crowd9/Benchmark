@@ -47,17 +47,22 @@ else
   requires 'perl -MTime::HiRes -e 1' 'perl'
 fi
 
-
+requires_command 'time'
 requires_command 'gcc'
 requires_command 'make'
+
+#!/bin/bash
+if [ "`whoami`" != "root" ]; then
+  SUDO='sudo'
+fi
 
 if [ "$TO_INSTALL" != '' ]; then
   echo "Using $PACKAGE_MANAGER to install$TO_INSTALL"
   if [ "$UPDATE" != '' ]; then
     echo "Doing package update"
-    sudo $UPDATE
+    $SUDO $UPDATE
   fi 
-  sudo $PACKAGE_MANAGER install -y $TO_INSTALL $MANAGER_OPTS
+  $SUDO $PACKAGE_MANAGER install -y $TO_INSTALL $MANAGER_OPTS
 fi 
 
 PID=`cat .sb-pid 2>/dev/null`
