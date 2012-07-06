@@ -116,7 +116,7 @@ RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-error" -F "upload[data]=<s
 
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
-echo "Done"
+echo "Completed! Your benchmark has been queued & will be delivered in a jiffy."
 kill `ps -p $$ -o ppid=` 2>&1 > /dev/null
 
 exit 0
