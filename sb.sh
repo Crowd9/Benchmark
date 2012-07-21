@@ -67,6 +67,7 @@ fi
 requires_command 'time'
 requires_command 'gcc'
 requires_command 'make'
+requires_command 'traceroute'
 
 if [ "`whoami`" != "root" ]; then
   SUDO='sudo'
