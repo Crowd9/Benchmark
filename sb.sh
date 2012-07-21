@@ -166,6 +166,9 @@ download_benchmark 'Softlayer, Washington, DC, USA' 'http://speedtest.wdc01.soft
 echo "Running traceroute..."
 echo "Traceroute (cachefly.cachefly.net): \`traceroute cachefly.cachefly.net 2>&1\`" >> sb-output.log
 
+echo "Running ping benchmark..."
+echo "Pings (cachefly.cachefly.net): \`ping -c 10 cachefly.cachefly.net 2>&1\`" >> sb-output.log
+
 echo "Running UnixBench benchmark..."
 cd $UNIX_BENCH_DIR
 ./Run 2>&1 >> ../sb-output.log
