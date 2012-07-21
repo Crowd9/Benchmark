@@ -17,5 +17,6 @@ ServerBear accepts no responsibility for any damage this script may cause.
 Please review the code at https://github.com/Crowd9/Benchmark if you have any concerns
 
 To run:
-export SBK="john@example.com|FooBarHosts.com|MonsterBox|\$20/mth";curl https://raw.github.com/Crowd9/Benchmark/master/script.sh|bash
+
+wget https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'john@example.com' 'FooBarHosts.com' 'MonsterBox' '\$20/mth'
 
