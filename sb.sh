@@ -128,9 +128,9 @@ Free:
 
 echo "Running dd I/O benchmark..."
 
-echo "dd 1Mx1k dsync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
-echo "dd 64kx16k dsync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
-echo "dd 1Mx1k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
+echo "dd 1Mx1k dsync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k conv=dsync 2>&1\`" >> sb-output.log
+echo "dd 64kx16k dsync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=dsync 2>&1\`" >> sb-output.log
+echo "dd 1Mx1k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k conv=fdatasync 2>&1\`" >> sb-output.log
 echo "dd 64kx16k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
 
 rm -f sb-io-test
@@ -186,8 +186,7 @@ EOF
 
 chmod u+x run-upload.sh
 
-rm sb-script.log
-
+rm -f sb-script.log
 nohup ./run-upload.sh 2>&1 >> sb-script.log & 2>&1 >/dev/null
 
 echo $! > .sb-pid
