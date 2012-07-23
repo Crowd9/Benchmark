@@ -12,9 +12,9 @@ then
   exit 1
 fi
 
-EMAIL=$1
+HOST=$1
 PLAN=$2
-HOST=$3
+EMAIL=$3
 COST=$4
 
 echo "
