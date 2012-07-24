@@ -175,7 +175,7 @@ cd $UNIX_BENCH_DIR
 ./Run 2>&1 >> ../sb-output.log
 cd ..
 
-RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$PLAN|$HOST|$COST" $UPLOAD_ENDPOINT\`
+RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$HOST|$PLAN|$COST" $UPLOAD_ENDPOINT\`
 
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
