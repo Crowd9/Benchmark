@@ -149,7 +149,7 @@ function download_benchmark() {
   echo "Benchmarking download from \$1 (\$2)"
   DOWNLOAD_SPEED=\`wget -O /dev/null \$2 2>&1 | awk '/\\/dev\\/null/ {speed=\$3 \$4} END {gsub(/\\(|\\)/,"",speed); print speed}'\`
   echo "Got \$DOWNLOAD_SPEED"
-  echo "Download \$1: \$DOWNLOAD_SPEED" 2>&1 >> sb-output.log
+  echo "Download \$1: \$DOWNLOAD_SPEED" &>> sb-output.log
 }
 
 echo "Running bandwidth benchmark..."
@@ -172,7 +172,7 @@ echo "Pings (cachefly.cachefly.net): \`ping -c 10 cachefly.cachefly.net 2>&1\`" 
 
 echo "Running UnixBench benchmark..."
 cd $UNIX_BENCH_DIR
-./Run 2>&1 >> ../sb-output.log
+./Run &>> ../sb-output.log
 cd ..
 
 RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$HOST|$PLAN|$COST" $UPLOAD_ENDPOINT\`
@@ -180,7 +180,7 @@ RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
 echo "Completed! Your benchmark has been queued & will be delivered in a jiffy."
-kill -15 \`ps -p \$\$ -o ppid=\` 2>&1 > /dev/null
+kill -15 \`ps -p \$\$ -o ppid=\` &> /dev/null
 
 exit 0
 EOF
@@ -188,7 +188,7 @@ EOF
 chmod u+x run-upload.sh
 
 rm -f sb-script.log
-nohup ./run-upload.sh 2>&1 >> sb-script.log & 2>&1 >/dev/null
+nohup ./run-upload.sh &>> sb-script.log & &>/dev/null
 
 echo $! > .sb-pid
 
