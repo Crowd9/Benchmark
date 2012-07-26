@@ -64,9 +64,9 @@ else
   requires 'perl -MTime::HiRes -e 1' 'perl'
 fi
 
-requires_command 'time'
 requires_command 'gcc'
 requires_command 'make'
+requires_command 'curl'
 requires_command 'traceroute'
 
 if [ "`whoami`" != "root" ]; then
