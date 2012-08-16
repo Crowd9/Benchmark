@@ -91,7 +91,7 @@ UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 
 if [ ! -f $IOPING_DIR ] ; then
   if [ ! -f ioping-$IOPING_VERSION.tar.gz ] ; then
-    wget -q https://github.com/Crowd9/Benchmark/raw/master/ioping-$IOPING_VERSION.tar.gz
+    wget -q https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
   fi
   tar -xzf ioping-$IOPING_VERSION.tar.gz
 fi
@@ -149,7 +149,7 @@ function download_benchmark() {
   echo "Benchmarking download from \$1 (\$2)"
   DOWNLOAD_SPEED=\`wget -O /dev/null \$2 2>&1 | awk '/\\/dev\\/null/ {speed=\$3 \$4} END {gsub(/\\(|\\)/,"",speed); print speed}'\`
   echo "Got \$DOWNLOAD_SPEED"
-  echo "Download \$1: \$DOWNLOAD_SPEED" &>> sb-output.log
+  echo "Download \$1: \$DOWNLOAD_SPEED" >> sb-output.log 2>&1
 }
 
 echo "Running bandwidth benchmark..."
@@ -177,7 +177,7 @@ echo "Pings (cachefly.cachefly.net): \`ping -c 10 cachefly.cachefly.net 2>&1\`" 
 
 echo "Running UnixBench benchmark..."
 cd $UNIX_BENCH_DIR
-./Run &>> ../sb-output.log
+./Run >> ../sb-output.log 2>&1
 cd ..
 
 RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$HOST|$PLAN|$COST" $UPLOAD_ENDPOINT\`
@@ -193,7 +193,7 @@ EOF
 chmod u+x run-upload.sh
 
 rm -f sb-script.log
-nohup ./run-upload.sh &>> sb-script.log & &>/dev/null
+nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
 
 echo $! > .sb-pid
 
