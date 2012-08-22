@@ -53,6 +53,7 @@ if [ `which apt-get >/dev/null 2>&1; echo $?` -ne 0 ]; then
   PACKAGE_MANAGER='yum'
 
   requires 'yum list installed kernel-devel' 'kernel-devel'
+  requires 'yum list installed libaio-dev' 'libaio-dev'
   requires 'yum list installed gcc-c++' 'gcc-c++'
   requires 'perl -MTime::HiRes -e 1' 'perl-Time-HiRes'
 else
@@ -61,6 +62,7 @@ else
   UPDATE='apt-get update'
 
   requires 'dpkg -s build-essential' 'build-essential'
+  requires 'dpkg -s libaio-dev' 'libaio-dev'
   requires 'perl -MTime::HiRes -e 1' 'perl'
 fi
 
@@ -87,6 +89,8 @@ UNIX_BENCH_VERSION='5.1.3'
 UNIX_BENCH_DIR=UnixBench-$UNIX_BENCH_VERSION
 IOPING_VERSION=0.6
 IOPING_DIR=ioping-$IOPING_VERSION
+FIO_VERSION=2.0.7
+FIO_DIR=fio-$FIO_VERSION
 UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 
 if [ ! -f $IOPING_DIR ] ; then
@@ -100,6 +104,9 @@ if [ -e "`pwd`/.sb-pid" ] && ps -p $PID >&- ; then
   echo "ServerBear job is already running (PID: $PID)"
   exit 0
 fi
+
+fio
+sb-io-test
 
 cat > run-upload.sh << EOF
 #!/bin/bash
