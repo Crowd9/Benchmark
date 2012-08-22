@@ -18,5 +18,5 @@ Please review the code at https://github.com/Crowd9/Benchmark if you have any co
 
 To run:
 
-wget https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'john@example.com' 'FooBarHosts.com' 'MonsterBox' '\$20/mth'
+wget -N https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'john@example.com' 'FooBarHosts.com' 'MonsterBox' '\\$20/mth'
 

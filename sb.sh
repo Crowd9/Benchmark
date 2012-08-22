@@ -12,9 +12,9 @@ then
   exit 1
 fi
 
-EMAIL=$1
+HOST=$1
 PLAN=$2
-HOST=$3
+EMAIL=$3
 COST=$4
 
 echo "
@@ -66,9 +66,9 @@ else
   requires 'perl -MTime::HiRes -e 1' 'perl'
 fi
 
-requires_command 'time'
 requires_command 'gcc'
 requires_command 'make'
+requires_command 'curl'
 requires_command 'traceroute'
 
 if [ "`whoami`" != "root" ]; then
@@ -95,7 +95,7 @@ UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 
 if [ ! -f $IOPING_DIR ] ; then
   if [ ! -f ioping-$IOPING_VERSION.tar.gz ] ; then
-    wget -q https://github.com/Crowd9/Benchmark/raw/master/ioping-$IOPING_VERSION.tar.gz
+    wget -q https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
   fi
   tar -xzf ioping-$IOPING_VERSION.tar.gz
 fi
@@ -156,7 +156,7 @@ function download_benchmark() {
   echo "Benchmarking download from \$1 (\$2)"
   DOWNLOAD_SPEED=\`wget -O /dev/null \$2 2>&1 | awk '/\\/dev\\/null/ {speed=\$3 \$4} END {gsub(/\\(|\\)/,"",speed); print speed}'\`
   echo "Got \$DOWNLOAD_SPEED"
-  echo "Download \$1: \$DOWNLOAD_SPEED" 2>&1 >> sb-output.log
+  echo "Download \$1: \$DOWNLOAD_SPEED" >> sb-output.log 2>&1
 }
 
 echo "Running bandwidth benchmark..."
@@ -165,6 +165,11 @@ download_benchmark 'Cachefly' 'http://cachefly.cachefly.net/100mb.test'
 download_benchmark 'Linode, Atlanta, GA, USA' 'http://atlanta1.linode.com/100MB-atlanta.bin'
 download_benchmark 'Linode, Dallas, TX, USA' 'http://dallas1.linode.com/100MB-dallas.bin'
 download_benchmark 'Linode, Tokyo, JP' 'http://tokyo1.linode.com/100MB-tokyo.bin'
+download_benchmark 'Linode, London, UK' 'http://speedtest.london.linode.com/100MB-london.bin'
+download_benchmark 'OVH, Paris, France' 'http://proof.ovh.net/files/100Mio.dat'
+download_benchmark 'SmartDC, Rotterdam, Netherlands' 'http://mirror.i3d.net/100mb.bin'
+download_benchmark 'Hetzner, Nuremberg, Germany' 'http://hetzner.de/100MB.iso'
+download_benchmark 'iiNet, Perth, WA, Australia' 'http://ftp.iinet.net.au/test100MB.dat'
 download_benchmark 'Leaseweb, Haarlem, NL, USA' 'http://mirror.leaseweb.com/speedtest/100mb.bin'
 download_benchmark 'Softlayer, Singapore' 'http://speedtest.sng01.softlayer.com/downloads/test100.zip'
 download_benchmark 'Softlayer, Seattle, WA, USA' 'http://speedtest.sea01.softlayer.com/downloads/test100.zip'
@@ -179,15 +184,15 @@ echo "Pings (cachefly.cachefly.net): \`ping -c 10 cachefly.cachefly.net 2>&1\`" 
 
 echo "Running UnixBench benchmark..."
 cd $UNIX_BENCH_DIR
-./Run 2>&1 >> ../sb-output.log
+./Run >> ../sb-output.log 2>&1
 cd ..
 
-RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$PLAN|$HOST|$COST" $UPLOAD_ENDPOINT\`
+RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$HOST|$PLAN|$COST" $UPLOAD_ENDPOINT\`
 
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
 echo "Completed! Your benchmark has been queued & will be delivered in a jiffy."
-kill -15 \`ps -p \$\$ -o ppid=\` 2>&1 > /dev/null
+kill -15 \`ps -p \$\$ -o ppid=\` &> /dev/null
 
 exit 0
 EOF
@@ -195,7 +200,7 @@ EOF
 chmod u+x run-upload.sh
 
 rm -f sb-script.log
-nohup ./run-upload.sh 2>&1 >> sb-script.log & 2>&1 >/dev/null
+nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
 
 echo $! > .sb-pid
 
