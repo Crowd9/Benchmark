@@ -27,7 +27,7 @@ This script will:
   * Download and run UnixBench
   * Upload to ServerBear the UnixBench output and information about this computer
 
-This script has been tested on Ubuntu, Debian, and CentOs.  Running it on other environments may not work correctly.
+This script has been tested on Ubuntu, Debian, and CentOs (6+).  Running it on other environments may not work correctly.
 
 To improve consistency, we recommend that you stop any services you may be running (e.g. web server, database, etc) to get the environment as close as possible to the original configuration.
 
@@ -87,25 +87,30 @@ fi
 PID=`cat .sb-pid 2>/dev/null`
 UNIX_BENCH_VERSION=5.1.3
 UNIX_BENCH_DIR=UnixBench-$UNIX_BENCH_VERSION
+UNIX_BENCH_FILE=UnixBench-$UNIX_BENCH_VERSION.tar.gz
 IOPING_VERSION=0.6
 IOPING_DIR=ioping-$IOPING_VERSION
+IOPING_FILE=ioping-$IOPING_VERSION.tar.gz
 FIO_VERSION=2.0.7
 FIO_DIR=fio-$FIO_VERSION
+FIO_FILE=fio-$FIO_VERSION
 UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 
-if [ ! -f $IOPING_DIR ] ; then
-  if [ ! -f ioping-$IOPING_VERSION.tar.gz ] ; then
-    wget -q https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
+# args: [name] [target dir] [filename] [url]
+function require_download() {
+  if [ ! -f $2 ] ; then
+    if [ ! -f $3 ] ; then
+      echo "Downloading $1..."
+      wget -q $4
+    fi
+    tar -xzf $3
+    rm -f $3
   fi
-  tar -xzf ioping-$IOPING_VERSION.tar.gz
-fi
+}
 
-if [ ! -f $FIO_DIR ] ; then
-  if [ ! -f ioping-$FIO_VERSION.tar.gz ] ; then
-    wget -q ...
-  fi
-  tar -xzf ioping-$FIO_VERSION.tar.gz
-fi
+require_download FIO fio-$FIO_VERSION fio-$FIO_VERSION.tar.gz https://github.com/Crowd9/Benchmark/raw/master/fio-$FIO_VERSION.tar.gz
+require_download IOPing ioping-$IOPING_VERSION ioping-$IOPING_VERSION.tar.gz https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
+require_download UnixBench UnixBench-$UNIX_BENCH_VERSION UnixBench$UNIX_BENCH_VERSION.tgz https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
 
 cat > $FIO_DIR/sb.ini << EOF
 [global]
@@ -125,11 +130,12 @@ startdelay=0
 filename=sb-io-test
 EOF
 
-rm -rf UnixBench
+rm -rf UnixBench 2>/dev/null
 
 if [ ! -f $UNIX_BENCH_DIR ] ; then
   if [ ! -f UnixBench$UNIX_BENCH_VERSION.tgz ] ; then
-    wget -q https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
+    echo "Downloading UnixBench $UNIX_BENCH_VERSION..."
+    wget -q
   fi
   tar -xzf UnixBench$UNIX_BENCH_VERSION.tgz
   mv UnixBench $UNIX_BENCH_DIR
@@ -230,7 +236,7 @@ EOF
 chmod u+x run-upload.sh
 
 rm -f sb-script.log
-nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
+#nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
 
 echo $! > .sb-pid
 
