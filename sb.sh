@@ -236,7 +236,7 @@ EOF
 chmod u+x run-upload.sh
 
 rm -f sb-script.log
-#nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
+nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
 
 echo $! > .sb-pid
 
