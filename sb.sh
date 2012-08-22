@@ -85,7 +85,7 @@ if [ "$TO_INSTALL" != '' ]; then
 fi
 
 PID=`cat .sb-pid 2>/dev/null`
-UNIX_BENCH_VERSION='5.1.3'
+UNIX_BENCH_VERSION=5.1.3
 UNIX_BENCH_DIR=UnixBench-$UNIX_BENCH_VERSION
 IOPING_VERSION=0.6
 IOPING_DIR=ioping-$IOPING_VERSION
@@ -100,6 +100,41 @@ if [ ! -f $IOPING_DIR ] ; then
   tar -xzf ioping-$IOPING_VERSION.tar.gz
 fi
 
+if [ ! -f $FIO_DIR ] ; then
+  if [ ! -f ioping-$FIO_VERSION.tar.gz ] ; then
+    wget -q ...
+  fi
+  tar -xzf ioping-$FIO_VERSION.tar.gz
+fi
+
+cat > $FIO_DIR/sb.ini << EOF
+[global]
+randrepeat=1
+ioengine=libaio
+bs=4k
+ba=4k
+size=1G
+direct=1
+gtod_reduce=1
+norandommap
+iodepth=64
+numjobs=\$ncpus
+
+[main]
+startdelay=0
+filename=sb-io-test
+EOF
+
+rm -rf UnixBench
+
+if [ ! -f $UNIX_BENCH_DIR ] ; then
+  if [ ! -f ioping-$IOPING_VERSION.tar.gz ] ; then
+    wget -q https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
+  fi
+  tar -xzf UnixBench5.1.3.tgz
+  mv UnixBench $UNIX_BENCH_DIR
+fi
+
 if [ -e "`pwd`/.sb-pid" ] && ps -p $PID >&- ; then
   echo "ServerBear job is already running (PID: $PID)"
   exit 0
@@ -110,15 +145,6 @@ sb-io-test
 
 cat > run-upload.sh << EOF
 #!/bin/bash
-
-rm -rf UnixBench
-
-if ! [ -e "`pwd`/$UNIX_BENCH_DIR" ]; then
-  echo "Getting UnixBench $UNIX_BENCH_VERSION..."
-  wget -q https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
-  tar -xzf UnixBench5.1.3.tgz
-  mv UnixBench $UNIX_BENCH_DIR
-fi
 
 echo "Running Benchmark as a background task."
 echo "This can take several hours.  ServerBear will email you when it's done."
@@ -145,11 +171,17 @@ rm -f sb-io-test
 
 echo "Running IOPing I/O benchmark..."
 cd $IOPING_DIR
-make >> sb-output.log
+make
 echo "IOPing I/O: \`./ioping -c 10 . 2>&1 \`
 IOPing seek rate: \`./ioping -RD . 2>&1 \`
 IOPing sequential: \`./ioping -RL . 2>&1\`
 IOPing cached: \`./ioping -RC . 2>&1\`" >> ../sb-output.log
+cd ..
+
+echo "Running FIO benchmark"
+cd $FIO_DIR
+make
+echo "FIO benchmark: \`fio sb.ini >> ../sb-output.log 2>&1\`"
 cd ..
 
 function download_benchmark() {
