@@ -140,9 +140,6 @@ if [ -e "`pwd`/.sb-pid" ] && ps -p $PID >&- ; then
   exit 0
 fi
 
-fio
-sb-io-test
-
 cat > run-upload.sh << EOF
 #!/bin/bash
 
@@ -182,6 +179,7 @@ echo "Running FIO benchmark"
 cd $FIO_DIR
 make
 echo "FIO benchmark: \`fio sb.ini >> ../sb-output.log 2>&1\`"
+rm sb-io-test
 cd ..
 
 function download_benchmark() {
