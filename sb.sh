@@ -128,10 +128,10 @@ EOF
 rm -rf UnixBench
 
 if [ ! -f $UNIX_BENCH_DIR ] ; then
-  if [ ! -f ioping-$IOPING_VERSION.tar.gz ] ; then
-    wget -q https://byte-unixbench.googlecode.com/files/UnixBench5.1.3.tgz
+  if [ ! -f UnixBench$UNIX_BENCH_VERSION.tgz ] ; then
+    wget -q https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
   fi
-  tar -xzf UnixBench5.1.3.tgz
+  tar -xzf UnixBench$UNIX_BENCH_VERSION.tgz
   mv UnixBench $UNIX_BENCH_DIR
 fi
 
