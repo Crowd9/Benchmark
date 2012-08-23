@@ -98,13 +98,12 @@ UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 
 # args: [name] [target dir] [filename] [url]
 function require_download() {
-  if [ ! -f $2 ] ; then
+  if ! [ -e "`pwd`/$2" ]; then
     if [ ! -f $3 ] ; then
       echo "Downloading $1..."
       wget -q $4
     fi
     tar -xzf $3
-    rm -f $3
   fi
 }
 
@@ -131,15 +130,6 @@ filename=sb-io-test
 EOF
 
 rm -rf UnixBench 2>/dev/null
-
-if [ ! -f $UNIX_BENCH_DIR ] ; then
-  if [ ! -f UnixBench$UNIX_BENCH_VERSION.tgz ] ; then
-    echo "Downloading UnixBench $UNIX_BENCH_VERSION..."
-    wget -q
-  fi
-  tar -xzf UnixBench$UNIX_BENCH_VERSION.tgz
-  mv UnixBench $UNIX_BENCH_DIR
-fi
 
 if [ -e "`pwd`/.sb-pid" ] && ps -p $PID >&- ; then
   echo "ServerBear job is already running (PID: $PID)"
@@ -174,23 +164,23 @@ rm -f sb-io-test
 
 echo "Running IOPing I/O benchmark..."
 cd $IOPING_DIR
-make
+make >> ../sb-output.log 2>&1
 echo "IOPing I/O: \`./ioping -c 10 . 2>&1 \`
 IOPing seek rate: \`./ioping -RD . 2>&1 \`
 IOPing sequential: \`./ioping -RL . 2>&1\`
 IOPing cached: \`./ioping -RC . 2>&1\`" >> ../sb-output.log
 cd ..
 
-echo "Running FIO benchmark"
+echo "Running FIO benchmark..."
 cd $FIO_DIR
-make
+make >> ../sb-output.log 2>&1
 echo "FIO benchmark: \`fio sb.ini >> ../sb-output.log 2>&1\`"
-rm sb-io-test
+rm sb-io-test 2>/dev/null
 cd ..
 
 function download_benchmark() {
   echo "Benchmarking download from \$1 (\$2)"
-  DOWNLOAD_SPEED=\`wget -O /dev/null \$2 2>&1 | awk '/\\/dev\\/null/ {speed=\$3 \$4} END {gsub(/\\(|\\)/,"",speed); print speed}'\`
+  NLOAD_SPEED=\`wget -O /dev/null \$2 2>&1 | awk '/\\/dev\\/null/ {speed=\$3 \$4} END {gsub(/\\(|\\)/,"",speed); print speed}'\`
   echo "Got \$DOWNLOAD_SPEED"
   echo "Download \$1: \$DOWNLOAD_SPEED" >> sb-output.log 2>&1
 }
