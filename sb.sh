@@ -183,7 +183,7 @@ cd ..
 echo "Running FIO benchmark..."
 cd $FIO_DIR
 make >> ../sb-output.log 2>&1
-echo "FIO benchmark: \`fio sb.ini >> ../sb-output.log 2>&1\`"
+./fio sb.ini >> ../sb-output.log 2>&1
 rm sb-io-test 2>/dev/null
 cd ..
 
