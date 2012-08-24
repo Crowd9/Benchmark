@@ -18,9 +18,9 @@ EMAIL=$3
 COST=$4
 
 echo "
-################################################################################
-#               ServerBear (http://serverbear.com) benchmarker                 #
-################################################################################
+###############################################################################
+#               ServerBear (http://serverbear.com) benchmarker                #
+###############################################################################
 
 This script will:
   * Download and install packages to run UnixBench
@@ -139,9 +139,18 @@ fi
 cat > run-upload.sh << EOF
 #!/bin/bash
 
-echo "Running Benchmark as a background task."
-echo "This can take several hours.  ServerBear will email you when it's done."
-echo "You can log out/Ctrl-C any time while this is happening (it's running through nohup)."
+echo "
+###############################################################################
+#                                                                             #
+#             Installation(s) complete.  Benchmarks starting...               #
+#                                                                             #
+#  Running Benchmark as a background task. This can take several hours.       #
+#  ServerBear will email you when it's done.                                  #
+#  You can log out/Ctrl-C any time while this is happening                    #
+#  (it's running through nohup).                                              #
+#                                                                             #
+###############################################################################
+"
 
 echo "Checking server stats..."
 echo "Distro:
