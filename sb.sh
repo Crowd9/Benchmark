@@ -87,7 +87,7 @@ fi
 PID=`cat .sb-pid 2>/dev/null`
 UNIX_BENCH_VERSION=5.1.3
 UNIX_BENCH_DIR=UnixBench-$UNIX_BENCH_VERSION
-UNIX_BENCH_FILE=UnixBench-$UNIX_BENCH_VERSION.tar.gz
+UNIX_BENCH_FILE=UnixBench$UNIX_BENCH_VERSION.tgz
 IOPING_VERSION=0.6
 IOPING_DIR=ioping-$IOPING_VERSION
 IOPING_FILE=ioping-$IOPING_VERSION.tar.gz
@@ -99,17 +99,15 @@ UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 # args: [name] [target dir] [filename] [url]
 function require_download() {
   if ! [ -e "`pwd`/$2" ]; then
-    if [ ! -f $3 ] ; then
-      echo "Downloading $1..."
-      wget --no-check-certificate -q $4
-    fi
-    tar -xzf $3
+    echo "Downloading $1..."
+    wget --no-check-certificate -q --no-check-certificate -O - $4 | tar -xzf -
   fi
 }
 
 require_download FIO fio-$FIO_VERSION fio-$FIO_VERSION.tar.gz https://github.com/Crowd9/Benchmark/raw/master/fio-$FIO_VERSION.tar.gz
 require_download IOPing ioping-$IOPING_VERSION ioping-$IOPING_VERSION.tar.gz https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
-require_download UnixBench UnixBench-$UNIX_BENCH_VERSION UnixBench$UNIX_BENCH_VERSION.tgz https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
+require_download UnixBench UnixBench$UNIX_BENCH_VERSION UnixBench$UNIX_BENCH_VERSION.tgz https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
+mv -f UnixBench $UNIX_BENCH_DIR
 
 cat > $FIO_DIR/sb.ini << EOF
 [global]
@@ -240,4 +238,4 @@ nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
 
 echo $! > .sb-pid
 
-tail -f sb-script.log
+tail -n 100 -f sb-script.log
