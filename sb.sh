@@ -101,7 +101,7 @@ function require_download() {
   if ! [ -e "`pwd`/$2" ]; then
     if [ ! -f $3 ] ; then
       echo "Downloading $1..."
-      wget -q $4
+      wget --no-check-certificate -q $4
     fi
     tar -xzf $3
   fi
@@ -140,7 +140,6 @@ cat > run-upload.sh << EOF
 #!/bin/bash
 
 echo "
-
 
 ###############################################################################
 #                                                                             #
