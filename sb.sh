@@ -53,7 +53,7 @@ if [ `which apt-get >/dev/null 2>&1; echo $?` -ne 0 ]; then
   PACKAGE_MANAGER='yum'
 
   requires 'yum list installed kernel-devel' 'kernel-devel'
-  requires 'yum list installed libaio-dev' 'libaio-dev'
+  requires 'yum list installed libaio-devel' 'libaio-devel'
   requires 'yum list installed gcc-c++' 'gcc-c++'
   requires 'perl -MTime::HiRes -e 1' 'perl-Time-HiRes'
 else
@@ -87,26 +87,23 @@ fi
 PID=`cat .sb-pid 2>/dev/null`
 UNIX_BENCH_VERSION=5.1.3
 UNIX_BENCH_DIR=UnixBench-$UNIX_BENCH_VERSION
-UNIX_BENCH_FILE=UnixBench$UNIX_BENCH_VERSION.tgz
 IOPING_VERSION=0.6
 IOPING_DIR=ioping-$IOPING_VERSION
-IOPING_FILE=ioping-$IOPING_VERSION.tar.gz
 FIO_VERSION=2.0.7
 FIO_DIR=fio-$FIO_VERSION
-FIO_FILE=fio-$FIO_VERSION
 UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 
 # args: [name] [target dir] [filename] [url]
 function require_download() {
   if ! [ -e "`pwd`/$2" ]; then
     echo "Downloading $1..."
-    wget --no-check-certificate -q --no-check-certificate -O - $4 | tar -xzf -
+    wget --no-check-certificate -q --no-check-certificate -O - $3 | tar -xzf -
   fi
 }
 
-require_download FIO fio-$FIO_VERSION fio-$FIO_VERSION.tar.gz https://github.com/Crowd9/Benchmark/raw/master/fio-$FIO_VERSION.tar.gz
-require_download IOPing ioping-$IOPING_VERSION ioping-$IOPING_VERSION.tar.gz https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
-require_download UnixBench UnixBench$UNIX_BENCH_VERSION UnixBench$UNIX_BENCH_VERSION.tgz https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
+require_download FIO fio-$FIO_DIR https://github.com/Crowd9/Benchmark/raw/master/fio-$FIO_VERSION.tar.gz
+require_download IOPing $IOPING_DIR https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
+require_download UnixBench $UNIX_BENCH_DIR https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
 mv -f UnixBench $UNIX_BENCH_DIR
 
 cat > $FIO_DIR/sb.ini << EOF
