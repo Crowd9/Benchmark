@@ -177,20 +177,20 @@ Free:
 
 echo "Running dd I/O benchmark..."
 
-# #echo "dd 1Mx1k dsync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k oflag=dsync 2>&1\`" >> sb-output.log
-# #echo "dd 64kx16k dsync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k oflag=dsync 2>&1\`" >> sb-output.log
-# #echo "dd 1Mx1k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k conv=fdatasync 2>&1\`" >> sb-output.log
-# #echo "dd 64kx16k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
+echo "dd 1Mx1k dsync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k oflag=dsync 2>&1\`" >> sb-output.log
+echo "dd 64kx16k dsync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k oflag=dsync 2>&1\`" >> sb-output.log
+echo "dd 1Mx1k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k conv=fdatasync 2>&1\`" >> sb-output.log
+echo "dd 64kx16k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
 
-# #rm -f sb-io-test
+rm -f sb-io-test
 
 echo "Running IOPing I/O benchmark..."
 cd $IOPING_DIR
 make >> ../sb-output.log 2>&1
-# #echo "IOPing I/O: \`./ioping -c 10 . 2>&1 \`
-# #IOPing seek rate: \`./ioping -RD . 2>&1 \`
-# #IOPing sequential: \`./ioping -RL . 2>&1\`
-# #IOPing cached: \`./ioping -RC . 2>&1\`" >> ../sb-output.log
+echo "IOPing I/O: \`./ioping -c 10 . 2>&1 \`
+IOPing seek rate: \`./ioping -RD . 2>&1 \`
+IOPing sequential: \`./ioping -RL . 2>&1\`
+IOPing cached: \`./ioping -RC . 2>&1\`" >> ../sb-output.log
 cd ..
 
 echo "Running FIO benchmark..."
