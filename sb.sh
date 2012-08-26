@@ -106,7 +106,7 @@ require_download IOPing $IOPING_DIR https://ioping.googlecode.com/files/ioping-$
 require_download UnixBench $UNIX_BENCH_DIR https://byte-unixbench.googlecode.com/files/UnixBench$UNIX_BENCH_VERSION.tgz
 mv -f UnixBench $UNIX_BENCH_DIR 2>/dev/null
 
-cat > $FIO_DIR/sb.ini << EOF
+cat > $FIO_DIR/reads.ini << EOF
 [global]
 randrepeat=1
 ioengine=libaio
@@ -119,9 +119,29 @@ norandommap
 iodepth=64
 numjobs=\$ncpus
 
-[main]
+[randomreads]
 startdelay=0
 filename=sb-io-test
+readwrite=randread
+EOF
+
+cat > $FIO_DIR/writes.ini << EOF
+[global]
+randrepeat=1
+ioengine=libaio
+bs=4k
+ba=4k
+size=1G
+direct=1
+gtod_reduce=1
+norandommap
+iodepth=64
+numjobs=\$ncpus
+
+[randomwrites]
+startdelay=0
+filename=sb-io-test
+readwrite=randwrite
 EOF
 
 if [ -e "`pwd`/.sb-pid" ] && ps -p $PID >&- ; then
@@ -157,26 +177,34 @@ Free:
 
 echo "Running dd I/O benchmark..."
 
-echo "dd 1Mx1k dsync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k oflag=dsync 2>&1\`" >> sb-output.log
-echo "dd 64kx16k dsync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k oflag=dsync 2>&1\`" >> sb-output.log
-echo "dd 1Mx1k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k conv=fdatasync 2>&1\`" >> sb-output.log
-echo "dd 64kx16k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
+# #echo "dd 1Mx1k dsync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k oflag=dsync 2>&1\`" >> sb-output.log
+# #echo "dd 64kx16k dsync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k oflag=dsync 2>&1\`" >> sb-output.log
+# #echo "dd 1Mx1k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=1M count=1k conv=fdatasync 2>&1\`" >> sb-output.log
+# #echo "dd 64kx16k fdatasync: \`dd if=/dev/zero of=sb-io-test bs=64k count=16k conv=fdatasync 2>&1\`" >> sb-output.log
 
-rm -f sb-io-test
+# #rm -f sb-io-test
 
 echo "Running IOPing I/O benchmark..."
 cd $IOPING_DIR
 make >> ../sb-output.log 2>&1
-echo "IOPing I/O: \`./ioping -c 10 . 2>&1 \`
-IOPing seek rate: \`./ioping -RD . 2>&1 \`
-IOPing sequential: \`./ioping -RL . 2>&1\`
-IOPing cached: \`./ioping -RC . 2>&1\`" >> ../sb-output.log
+# #echo "IOPing I/O: \`./ioping -c 10 . 2>&1 \`
+# #IOPing seek rate: \`./ioping -RD . 2>&1 \`
+# #IOPing sequential: \`./ioping -RL . 2>&1\`
+# #IOPing cached: \`./ioping -RC . 2>&1\`" >> ../sb-output.log
 cd ..
 
 echo "Running FIO benchmark..."
 cd $FIO_DIR
 make >> ../sb-output.log 2>&1
-./fio sb.ini >> ../sb-output.log 2>&1
+
+echo "FIO random reads:
+\`./fio reads.ini 2>&1\`
+Done" >> ../sb-output.log
+
+echo "FIO random writes:
+\`./fio writes.ini 2>&1\`
+Done" >> ../sb-output.log
+
 rm sb-io-test 2>/dev/null
 cd ..
 
