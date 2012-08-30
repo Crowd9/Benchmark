@@ -66,6 +66,10 @@ else
   requires 'perl -MTime::HiRes -e 1' 'perl'
 fi
 
+rm -rf sb-bench
+mkdir -p sb-bench
+cd sb-bench
+
 requires_command 'gcc'
 requires_command 'make'
 requires_command 'curl'
@@ -249,6 +253,7 @@ echo "Uploading results..."
 echo "Response: \$RESPONSE"
 echo "Completed! Your benchmark has been queued & will be delivered in a jiffy."
 kill -15 \`ps -p \$\$ -o ppid=\` &> /dev/null
+rm -rf ../sb-bench
 
 exit 0
 EOF
