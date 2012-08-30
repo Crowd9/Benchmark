@@ -12,6 +12,8 @@ then
   exit 1
 fi
 
+rm sb.sh
+
 HOST=$1
 PLAN=$2
 EMAIL=$3
@@ -254,7 +256,6 @@ echo "Response: \$RESPONSE"
 echo "Completed! Your benchmark has been queued & will be delivered in a jiffy."
 kill -15 \`ps -p \$\$ -o ppid=\` &> /dev/null
 rm -rf ../sb-bench
-rm -rf ../sb.sh
 rm -rf ~/.sb-pid
 
 exit 0
