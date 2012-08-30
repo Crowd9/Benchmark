@@ -88,7 +88,7 @@ if [ "$TO_INSTALL" != '' ]; then
   $SUDO $PACKAGE_MANAGER install -y $TO_INSTALL $MANAGER_OPTS
 fi
 
-PID=`cat .sb-pid 2>/dev/null`
+PID=`cat ~/.sb-pid 2>/dev/null`
 UNIX_BENCH_VERSION=5.1.3
 UNIX_BENCH_DIR=UnixBench-$UNIX_BENCH_VERSION
 IOPING_VERSION=0.6
@@ -148,7 +148,7 @@ filename=sb-io-test
 readwrite=randwrite
 EOF
 
-if [ -e "`pwd`/.sb-pid" ] && ps -p $PID >&- ; then
+if [ -e "~/.sb-pid" ] && ps -p $PID >&- ; then
   echo "ServerBear job is already running (PID: $PID)"
   exit 0
 fi
@@ -254,6 +254,7 @@ echo "Response: \$RESPONSE"
 echo "Completed! Your benchmark has been queued & will be delivered in a jiffy."
 kill -15 \`ps -p \$\$ -o ppid=\` &> /dev/null
 rm -rf ../sb-bench
+rm -rf ~/.sb-pid
 
 exit 0
 EOF
@@ -263,6 +264,6 @@ chmod u+x run-upload.sh
 rm -f sb-script.log
 nohup ./run-upload.sh >> sb-script.log 2>&1 & &> /dev/null
 
-echo $! > .sb-pid
+echo $! > ~/.sb-pid
 
 tail -n 100 -f sb-script.log
