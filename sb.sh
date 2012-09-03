@@ -170,6 +170,7 @@ echo "
 #                                                                             #
 ###############################################################################
 "
+>sb-output.log
 
 echo "Checking server stats..."
 echo "Distro:
@@ -179,7 +180,7 @@ CPU Info:
 Disk space: 
 \`df --total 2>&1\`
 Free: 
-\`free 2>&1\`" > sb-output.log
+\`free 2>&1\`" >> sb-output.log
 
 echo "Running dd I/O benchmark..."
 
