@@ -18,6 +18,7 @@ HOST=$1
 PLAN=$2
 EMAIL=$3
 COST=$4
+PRIVATE=$5
 
 echo "
 ###############################################################################
@@ -97,7 +98,7 @@ IOPING_VERSION=0.6
 IOPING_DIR=ioping-$IOPING_VERSION
 FIO_VERSION=2.0.9
 FIO_DIR=fio-$FIO_VERSION
-UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
+UPLOAD_ENDPOINT='http://dev.promozor.com:3000/uploads.text'
 
 # args: [name] [target dir] [filename] [url]
 function require_download() {
@@ -249,7 +250,7 @@ cd $UNIX_BENCH_DIR
 ./Run >> ../sb-output.log 2>&1
 cd ..
 
-RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$HOST|$PLAN|$COST" $UPLOAD_ENDPOINT\`
+RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$HOST|$PLAN|$COST" -F "private=$PRIVATE" $UPLOAD_ENDPOINT\`
 
 echo "Uploading results..."
 echo "Response: \$RESPONSE"
