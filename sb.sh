@@ -98,7 +98,7 @@ IOPING_VERSION=0.6
 IOPING_DIR=ioping-$IOPING_VERSION
 FIO_VERSION=2.0.9
 FIO_DIR=fio-$FIO_VERSION
-UPLOAD_ENDPOINT='http://dev.promozor.com:3000/uploads.text'
+UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 
 # args: [name] [target dir] [filename] [url]
 function require_download() {
