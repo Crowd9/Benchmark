@@ -248,7 +248,7 @@ echo "Pings (cachefly.cachefly.net): \`ping -c 10 cachefly.cachefly.net 2>&1\`" 
 
 echo "Running UnixBench benchmark..."
 cd $UNIX_BENCH_DIR
-./Run >> ../sb-output.log 2>&1
+./Run -c 1 -c `grep -c processor /proc/cpuinfo` >> ../sb-output.log 2>&1
 cd ..
 
 RESPONSE=\`curl -s -F "upload[upload_type]=unix-bench-output" -F "upload[data]=<sb-output.log" -F "upload[key]=$EMAIL|$HOST|$PLAN|$COST" -F "private=$PRIVATE" $UPLOAD_ENDPOINT\`
