@@ -124,7 +124,7 @@ direct=1
 gtod_reduce=1
 norandommap
 iodepth=64
-numjobs=\$ncpus
+numjobs=1
 
 [randomreads]
 startdelay=0
@@ -143,7 +143,7 @@ direct=1
 gtod_reduce=1
 norandommap
 iodepth=64
-numjobs=\$ncpus
+numjobs=1
 
 [randomwrites]
 startdelay=0
