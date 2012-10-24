@@ -16,7 +16,10 @@ ServerBear accepts no responsibility for any damage this script may cause.
 
 Please review the code at https://github.com/Crowd9/Benchmark if you have any concerns
 
-To run:
+To run (please substitute your host details):
 
-wget -N https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'FooBarHosts.com' 'MonsterBox' 'john@example.com' '\\$20/mth'
+wget -N https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'Web Host Name' 'Plan Name' 'youremail@address.com' 'Cost'
 
+Example:
+
+wget -N https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'Linode' 'Linode 512' 'storecrowd@mailinator.com' '19.99'
