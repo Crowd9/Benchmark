@@ -16,7 +16,7 @@ ServerBear accepts no responsibility for any damage this script may cause.
 
 Please review the code at https://github.com/Crowd9/Benchmark if you have any concerns
 
-To run (please substitute your host details):
+To run (please substitute your host details, you must include a valid email address to recieve your report):
 
 wget -N https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'Web Host Name' 'Plan Name' 'youremail@address.com' 'Cost'
 
