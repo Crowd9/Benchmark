@@ -226,9 +226,9 @@ function download_benchmark() {
 echo "Running bandwidth benchmark..."
 
 download_benchmark 'Cachefly' 'http://cachefly.cachefly.net/100mb.test'
-download_benchmark 'Linode, Atlanta, GA, USA' 'http://atlanta1.linode.com/100MB-atlanta.bin'
-download_benchmark 'Linode, Dallas, TX, USA' 'http://dallas1.linode.com/100MB-dallas.bin'
-download_benchmark 'Linode, Tokyo, JP' 'http://tokyo1.linode.com/100MB-tokyo.bin'
+download_benchmark 'Linode, Atlanta, GA, USA' 'http://speedtest.atlanta.linode.com/100MB-atlanta.bin'
+download_benchmark 'Linode, Dallas, TX, USA' 'http://speedtest.dallas.linode.com/100MB-dallas.bin'
+download_benchmark 'Linode, Tokyo, JP' 'http://speedtest.tokyo.linode.com/100MB-tokyo.bin'
 download_benchmark 'Linode, London, UK' 'http://speedtest.london.linode.com/100MB-london.bin'
 download_benchmark 'OVH, Paris, France' 'http://proof.ovh.net/files/100Mio.dat'
 download_benchmark 'SmartDC, Rotterdam, Netherlands' 'http://mirror.i3d.net/100mb.bin'
