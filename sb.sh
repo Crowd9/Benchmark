@@ -104,7 +104,7 @@ UPLOAD_ENDPOINT='http://promozor.com/uploads.text'
 function require_download() {
   if ! [ -e "`pwd`/$2" ]; then
     echo "Downloading $1..."
-    wget --no-check-certificate -q --no-check-certificate -O - $3 | tar -xzf -
+    wget -q --no-check-certificate -O - $3 | tar -xzf -
   fi
 }
 
