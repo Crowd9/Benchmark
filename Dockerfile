@@ -18,4 +18,7 @@ RUN chmod a+x /usr/local/bin/sb.sh && \
     apt-get clean && apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+VOLUME ["/test"]
+WORKDIR /test
+
 ENTRYPOINT ["sb.sh"]
