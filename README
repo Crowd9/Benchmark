@@ -23,3 +23,9 @@ wget -N https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'Web Ho
 Example:
 
 wget -N https://raw.github.com/Crowd9/Benchmark/master/sb.sh&&bash sb.sh 'Linode' 'Linode 512' 'storecrowd@mailinator.com' '19.99'
+
+
+Docker Usage
+------------
+
+    docker run --rm -it kylemanna/serverbear 'Linode' 'Linode 512' 'storecrowd@mailinator.com' '19.99'
