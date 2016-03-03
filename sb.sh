@@ -109,7 +109,7 @@ function require_download() {
 }
 
 require_download FIO fio-$FIO_DIR https://github.com/Crowd9/Benchmark/raw/master/fio-$FIO_VERSION.tar.gz
-require_download IOPing $IOPING_DIR https://ioping.googlecode.com/files/ioping-$IOPING_VERSION.tar.gz
+require_download IOPing $IOPING_DIR https://github.com/Crowd9/Benchmark/raw/master/ioping-$IOPING_VERSION.tar.gz
 require_download UnixBench $UNIX_BENCH_DIR https://github.com/Crowd9/Benchmark/raw/master/UnixBench$UNIX_BENCH_VERSION-patched.tgz
 mv -f UnixBench $UNIX_BENCH_DIR 2>/dev/null
 
